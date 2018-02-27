@@ -1,0 +1,26 @@
+{
+   "background": {
+      "persistent": true,
+      "scripts": [ "bg.js" ]
+   },
+   "content_scripts": [ {
+      "css": [ "viewer.css" ],
+      "js": [ "jquery-3.1.1.min.js", "viewer.js" ],
+      "matches": [ "https://www.zhihu.com/*"]
+   } ],
+   "description": "看知乎，看知乎图",
+   "icons": {
+      "128": "icon.png",
+      "16": "icon.png",
+      "48": "icon.png"
+   },
+   "manifest_version": 2,
+   "name": "看知乎图",
+   "page_action": {
+      "default_icon": "icon.png",
+      "default_popup": "readme.html",
+      "default_title": "看知乎图—阅读使用说明"
+   },
+   "permissions": [ "tabs", "activeTab", "https://www.zhihu.com/question/*"],
+   "version": "1.1.3"
+}
