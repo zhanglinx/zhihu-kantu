@@ -12,8 +12,9 @@ $(document).ready(function () {
 });
 
 function main() {
-	var allImages = $('.List-item').find('noscript');
-	var allImagesView = $('.List').find('.lazy');
+	// var allImages = $('.List-item').find('noscript');
+	var allImages = $('.zm-item').find('.content');
+	// var allImagesView = $('.List').find('.lazy');
 	var allImagesUrl = [];
 	var allImagesHtml = [];
 	var viewportWidth = $(window).width();
@@ -31,20 +32,14 @@ function main() {
 	var isPresented = false;
 
 
-	re = /https:.{0,80}_r.*?g/;
+	re = /https:.{0,80}_r.*?g/g;
 	allImages.each(function (index, image) {
-		var x = re.exec($(this).text());
+		var x = $(this).text().match(re);
 		if (x) {
-			allImagesUrl.push(x[0]);
+			allImagesUrl.push.apply(allImagesUrl, x)
 		}
 	});
 
-	allImagesView.each(function (index, image) {
-		var x = $(this).attr('data-original');
-		if (x) {
-			allImagesUrl.push(x);
-		}
-	});
 
 
 	$('<div class="viewer">' +
