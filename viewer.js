@@ -14,20 +14,43 @@ $(document).ready(function () {
 function main() {
 	var getUrl = window.location.href;
 	var urlback = window.location.pathname;
-	var reguc=/collection/;
-	var reguq=/question/;
-	var regue=/explore/;
-	var regup=/people/;
-	if (reguc.test(urlback)){
-		var allImages = $('.zm-item').find('.content');
-	}
-	else if(reguq.test(urlback)){
-		var allImages = $('.List-item').find('noscript');
-	}
-	// var allImages = $('.List-item').find('noscript');
-	
-	// var allImagesView = $('.List').find('.lazy');
 	var allImagesUrl = [];
+	var issrc = false
+	var reguc = /collection/;
+	var reguq = /question/;
+	var regue = /explore/;
+	var regup = /people/;
+	var homeurl = 'https://www.zhihu.com/'
+	//收餐夹页面
+	if (reguc.test(urlback) || regue.test(urlback)) {
+		var allImages = $('.zm-item').find('.content');
+		if (allImages.length == 0) {
+			var allImages = $('.zm-item-rich-text').find('.content');
+		}
+
+		//问题页
+	} else if (reguq.test(urlback)) {
+		var allImages = $('.List-item').find('noscript');
+
+		//个人页
+	} else if (regup.test(urlback) || (homeurl == getUrl)) {
+		//把所有的答案都点开
+		buttons = $(".ContentItem-more");
+		buttons.each(function (index, image) {
+			$(this).click();
+		});
+
+		var allImages = $('.CopyrightRichText-richText').find('img');
+		allImages.each(function (index, image) {
+			var x = $(this)[0].src;
+			if (x) {
+				allImagesUrl.push(x);
+			}
+		});
+		issrc = true;
+	}
+
+	// var allImagesView = $('.List').find('.lazy');
 	var allImagesHtml = [];
 	var viewportWidth = $(window).width();
 	var viewportHeight = window.innerHeight;
@@ -45,12 +68,14 @@ function main() {
 
 
 	re = /https:.{0,80}_r.*?g/g;
-	allImages.each(function (index, image) {
-		var x = $(this).text().match(re);
-		if (x) {
-			allImagesUrl.push.apply(allImagesUrl, x)
-		}
-	});
+	if (!issrc) {
+		allImages.each(function (index, image) {
+			var x = $(this).text().match(re);
+			if (x) {
+				allImagesUrl.push.apply(allImagesUrl, x)
+			}
+		});
+	}
 
 
 
@@ -77,8 +102,8 @@ function main() {
 	maxImages = allImagesUrl.length;
 	total = $('.total');
 	current = $('.current');
-	total.text(maxImages);
-	current.text('1');
+	total.text(parseInt(maxImages) - 1);
+	current.text(1);
 	prevButton = $('.paginator-left');
 	nextButton = $('.paginator-right');
 	if (maxImages === 0) {
@@ -88,14 +113,19 @@ function main() {
 	if (maxImages === 1) {
 		nextButton.hide();
 	}
+	//把页面滑动到最下面
+	function turnPage(cn) {
+		a = $('.' + cn);
+		lastItem = a[a.length - 1];
+		lastItem.scrollIntoView(true);
+	}
 
 	function prevPic() {
 		var currentPosition = parseInt(imageHolder.data('index'));
-		var currentPic = parseInt(current.text());
 		if (currentPosition !== 0) {
 			imageHolder.css('right', (currentPosition - 1) * 100 + '%');
 			imageHolder.data('index', currentPosition - 1);
-			current.text(currentPic - 1);
+			current.text(currentPosition - 1);
 		}
 		if (currentPosition === 1) {
 			prevButton.fadeOut(400);
@@ -105,12 +135,11 @@ function main() {
 
 	function nextPic() {
 		var currentPosition = parseInt(imageHolder.data('index'));
-		var currentPic = parseInt(current.text());
 		prevButton.fadeIn(400);
 		if (currentPosition < maxImages - 1) {
 			imageHolder.css('right', (currentPosition + 1) * 100 + '%');
 			imageHolder.data('index', currentPosition + 1);
-			current.text(currentPic + 1);
+			current.text(currentPosition + 1);
 		}
 		if (currentPosition === maxImages - 2) {
 			nextButton.fadeOut(400);
@@ -162,7 +191,7 @@ function main() {
 		var r = window.location.search.substr(1).match(reg);
 
 		if (r != null) {
-		   return unescape(r[2]);
+			return unescape(r[2]);
 		}
 		return null;
 	}
