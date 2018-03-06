@@ -12,8 +12,20 @@ $(document).ready(function () {
 });
 
 function main() {
+	var getUrl = window.location.href;
+	var urlback = window.location.pathname;
+	var reguc=/collection/;
+	var reguq=/question/;
+	var regue=/explore/;
+	var regup=/people/;
+	if (reguc.test(urlback)){
+		var allImages = $('.zm-item').find('.content');
+	}
+	else if(reguq.test(urlback)){
+		var allImages = $('.List-item').find('noscript');
+	}
 	// var allImages = $('.List-item').find('noscript');
-	var allImages = $('.zm-item').find('.content');
+	
 	// var allImagesView = $('.List').find('.lazy');
 	var allImagesUrl = [];
 	var allImagesHtml = [];
@@ -143,6 +155,16 @@ function main() {
 		nextButton.off('click');
 		$('.close-window').off('click');
 		$(document).off('keydown', shortCuts);
+	}
+
+	function getQueryString(name) {
+		var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+		var r = window.location.search.substr(1).match(reg);
+
+		if (r != null) {
+		   return unescape(r[2]);
+		}
+		return null;
 	}
 
 	$(window).resize(function () {
