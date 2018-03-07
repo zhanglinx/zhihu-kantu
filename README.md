@@ -22,8 +22,8 @@ Esc退出看图模式
 
 项目地址在[知乎看图](https://github.com/jin10086/zhihukantu)
 ## 功能演示
-![9gNGRJ.gif](https://s1.ax1x.com/2018/03/06/9gNGRJ.gif)
-![9gN8G4.gif](https://s1.ax1x.com/2018/03/06/9gN8G4.gif)
+![9gNGRJ.gif](http://wx1.sinaimg.cn/mw690/cfc08357gy1fp45ejqpryg20dc07i4qs.gif)
+![9gN8G4.gif](http://wx2.sinaimg.cn/mw690/cfc08357gy1fp45f3pgl1g20dc07i7wj.gif)
 
 ## Todo
 - 自动加载下一页图片
