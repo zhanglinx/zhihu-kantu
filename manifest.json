@@ -21,6 +21,6 @@
       "default_popup": "readme.html",
       "default_title": "看知乎图—阅读使用说明"
    },
-   "permissions": [ "tabs", "activeTab", "https://www.zhihu.com/question/*"],
+   "permissions": [ "tabs", "activeTab", "https://www.zhihu.com/*"],
    "version": "1.1.3"
 }
